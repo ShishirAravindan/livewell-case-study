@@ -1,8 +1,8 @@
-# UTI Care Agent
+# UTI Care Agent - Setup & Technical Guide
 
-An AI-powered command-line tool for assessing urinary tract infection (UTI) symptoms and providing evidence-based treatment recommendations.
+This is the core implementation of the Livewell UTI Care Agent - an AI-powered command-line tool for assessing urinary tract infection (UTI) symptoms and providing evidence-based treatment recommendations.
 
-## Features
+## 🚀 Features
 
 - **Intelligent Symptom Assessment**: Uses LLM-powered natural language understanding to extract symptoms from patient descriptions
 - **Clinical Decision Engine**: Implements UTI clinical guidelines with safety checks and exclusion criteria
@@ -10,7 +10,7 @@ An AI-powered command-line tool for assessing urinary tract infection (UTI) symp
 - **Safety-First Approach**: Defaults to referral for complicated cases or red flag symptoms
 - **Conversational Interface**: Natural CLI conversation flow with empathetic responses
 
-## Setup
+## 🛠️ Setup & Installation
 
 ### Prerequisites
 - Python 3.9+
@@ -20,46 +20,37 @@ An AI-powered command-line tool for assessing urinary tract infection (UTI) symp
 ### Installation
 
 1. Clone and navigate to the project:
-```bash
-cd uti-agent
-```
+    ```bash
+    git clone https://github.com/ShishirAravindan/livewell-case-study.git
+    cd uti-agent
+    ```
 
 2. Install dependencies:
-```bash
-uv sync
-```
+    ```bash
+    uv sync
+    ```
 
 3. Set up environment variables:
 
-**Google Gemini API Setup**
-1. Get a free API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. Add it to your `.env` file as shown above
+    **Google Gemini API Setup**
+    1. Get a free API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+    2. Add it to your `.env` file as shown above
 
-```bash
-# GOOGLE_API_KEY=your-actual-api-key-here
-```
+    ```bash
+    # GOOGLE_API_KEY=your-actual-api-key-here
+    ```
 
-## Usage
+### Usage
 
-### Run the Agent
-```bash
-uv run python main.py
-```
+4. **Run the Agent** 
+    - Make sure you are in the `uti-agent` directory before running the agent.
+    ```bash
+    uv run python main.py
+    ```
 
-### Test the Integration
-```bash
-uv run python tests/test_llm_integration.py
-```
+## Development
 
-## How It Works
-
-1. **Conversation Flow**: Guides users through symptom assessment, demographics, and medical history collection
-2. **LLM Processing**: Uses Gemini to extract structured data from natural language input
-3. **Clinical Assessment**: Applies evidence-based UTI criteria and safety checks
-4. **Response Generation**: Provides empathetic, clear treatment recommendations or referrals
-5. **Fallback Mode**: Works without LLM using basic keyword matching if API unavailable
-
-## Clinical Logic
+### Clinical Logic
 
 The agent implements standard UTI assessment criteria:
 - **Symptom Assessment**: Acute dysuria OR 2+ qualifying symptoms
@@ -67,22 +58,8 @@ The agent implements standard UTI assessment criteria:
 - **Treatment Selection**: Nitrofurantoin first-line, alternatives for allergies
 - **Safety Mechanisms**: Default referral for complications or uncertainty
 
-## Development
-
-### Running Tests
-```bash
-uv run python tests/test_llm_integration.py
-```
-
 ### Adding New Features
 The modular architecture allows easy extension:
 - Add new extraction patterns in `input_parser.py`
 - Extend clinical rules in `clinical_engine.py`  
 - Customize responses in `response_gen.py`
-
-## Safety & Disclaimers
-
-- This tool is for guidance only and does not replace professional medical advice
-- All complex or uncertain cases default to healthcare provider referral
-- Built-in safety checks prevent inappropriate self-treatment recommendations
-- Session logging enables clinical review and quality improvement
