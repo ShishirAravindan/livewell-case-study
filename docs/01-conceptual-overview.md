@@ -12,6 +12,6 @@ This AI agent automates routine urinary tract infection (UTI) treatment, providi
 The system prioritizes patient safety with built-in escalation protocols, ensuring complex cases receive appropriate human clinical oversight while autonomously handling routine cases that match established clinical protocols.
 
 <p align="center">
-  <img src="livewell.svg" alt="system-architecture" width="600"/>
+  <img src="livewell.png" alt="system-architecture" width="750"/>
 </p>
 
