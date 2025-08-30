@@ -24,29 +24,28 @@ The system prioritizes patient safety with built-in escalation protocols, ensuri
 |----------|---------|
 | [**Deliverable 01: Conceptual Guide**](./docs/01-conceptual-overview.md) | System architecture & conceptual explanation |
 | [**Setup & Installation**](./uti-agent/README.md) | Complete setup instructions, API configuration, and usage guide |
-| [**Deliverable 03: Agent Eval & CI**](./docs/03-agent-eval-CI.md) |  |
+| [**Deliverable 03: Agent Eval & CI**](./docs/03-agent-eval-CI.md) | Short paper on managing agentic system |
 
 ## 📁 Project Structure
 
 ```
 livewell-case-study/
-├── README.md                       # Project overview and navigation
-├── uti-agent/                      # Core agent implementation
+├── README.md                   # Project overview and navigation
+├── uti-agent/                  # Core agent implementation
 │   ├── README.md                   # Setup and technical guide
 │   ├── main.py                     # CLI entry point
-│   ├── core/                                      # Core components
-│   ├── models/                                    # Data models
-│   ├── utils/                                     # Utilities and logging
-│   └── tests/                                     # Test suite
-└── docs/                                          # Documentation
-    ├── 01-conceptual-overview.md                  # System design and principles
-    ├── spec.md                               # Technical specifications
-    ├── agent-eval-continuous-improvement.md  # Quality assurance framework
-    ├── livewell.png                          # Architecture diagram
-    └── livewell-dark.png                     # Dark mode diagram
+│   ├── core/                       # Core components
+│   ├── models/                     # Data models
+│   ├── utils/                      # Utilities and logging
+│   └── tests/                      # Test suite
+└── docs/
+    ├── 01-conceptual-overview.md
+    ├── 03-agent-eval-CI.md
 ```
 
 ## 🚀 Quick Start
+
+*See the [Setup Guide](./uti-agent/README.md) for detailed installation and configuration instructions.*
 
 ```bash
 # Navigate to the agent directory
@@ -59,18 +58,8 @@ uv sync
 uv run python main.py
 ```
 
-*See the [Setup Guide](./uti-agent/README.md) for detailed installation and configuration instructions.*
-
 ## ⚠️ Important Notice
 
 Educational use only. Not for clinical deployment without proper validation and regulatory approval.
 
 ---
-
-## 📊 Key Features
-
-- **Natural Language Processing**: Understands patient symptoms described in everyday language
-- **Clinical Decision Support**: Follows established UTI treatment protocols
-- **Safety-First Approach**: Automatically identifies red flags requiring medical attention
-- **Structured Logging**: Comprehensive evaluation and quality improvement tracking
-- **CLI Interface**: Simple command-line interface with rich formatting
