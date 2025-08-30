@@ -1,11 +1,15 @@
 from typing import Dict, Any, Optional
+import os
 from enum import Enum
 from models.patient_data import PatientData, SymptomData, DemographicData, HistoryData
 from models.treatment_plan import EligibilityResult
 from core.input_parser import InputParser
 from core.clinical_engine import ClinicalDecisionEngine
 from core.response_gen import ResponseGenerator
+from utils.llm_client import GeminiClient
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class ConversationState(Enum):
     GREETING = "greeting"
@@ -17,12 +21,22 @@ class ConversationState(Enum):
 
 
 class ConversationManager:
-    def __init__(self):
+    def __init__(self, enable_llm: bool = True):
         self.state = ConversationState.GREETING
         self.patient_data = PatientData()
-        self.input_parser = InputParser()
+        
+        # Initialize LLM client if enabled and API key available
+        self.llm_client = None
+        if enable_llm:
+            try:
+                self.llm_client = GeminiClient(api_key=os.getenv('GOOGLE_API_KEY'))
+            except ValueError as e:
+                print(f"Warning: {e}")
+                print("Falling back to basic parsing without LLM integration.")
+        
+        self.input_parser = InputParser(self.llm_client)
         self.clinical_engine = ClinicalDecisionEngine()
-        self.response_generator = ResponseGenerator()
+        self.response_generator = ResponseGenerator(self.llm_client)
         self.conversation_history = []
     
     def track_conversation_state(self, user_input: str, response: str):
