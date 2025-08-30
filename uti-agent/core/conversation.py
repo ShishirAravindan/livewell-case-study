@@ -1,6 +1,10 @@
 from typing import Dict, Any, Optional
 import os
 from enum import Enum
+from rich.console import Console
+from rich.panel import Panel
+from rich.markdown import Markdown
+from rich.text import Text
 from models.patient_data import PatientData, SymptomData, DemographicData, HistoryData
 from models.treatment_plan import EligibilityResult
 from core.input_parser import InputParser
@@ -24,6 +28,7 @@ class ConversationManager:
     def __init__(self, enable_llm: bool = True):
         self.state = ConversationState.GREETING
         self.patient_data = PatientData()
+        self.console = Console()
         
         # Initialize LLM client if enabled and API key available
         self.llm_client = None
@@ -31,8 +36,8 @@ class ConversationManager:
             try:
                 self.llm_client = GeminiClient(api_key=os.getenv('GOOGLE_API_KEY'))
             except ValueError as e:
-                print(f"Warning: {e}")
-                print("Falling back to basic parsing without LLM integration.")
+                self.display_warning(f"Warning: {e}")
+                self.display_warning("Falling back to basic parsing without LLM integration.")
         
         self.input_parser = InputParser(self.llm_client)
         self.clinical_engine = ClinicalDecisionEngine()
@@ -147,3 +152,55 @@ class ConversationManager:
     
     def is_complete(self) -> bool:
         return self.state == ConversationState.COMPLETE
+    
+    def display_welcome(self):
+        """Display welcome message in agent box"""
+        welcome_text = """Hello! I'm here to help assess your urinary symptoms and provide guidance.
+
+*Type 'quit' or 'exit' to end the session at any time.*
+
+Can you tell me what symptoms you're experiencing?"""
+        
+        panel = Panel(
+            Markdown(welcome_text),
+            title="UTI Care Agent",
+            border_style="cyan",
+            padding=(1, 1)
+        )
+        self.console.print(panel)
+    
+    def display_agent_response(self, response: str):
+        """Display agent response with cyan styling"""
+        panel = Panel(
+            Markdown(response),
+            title="UTI Care Agent",
+            border_style="cyan",
+            padding=(1, 1)
+        )
+        self.console.print(panel)
+    
+    def display_user_input(self, user_input: str):
+        """Display user input with blue border"""
+        panel = Panel(
+            user_input,
+            title="You",
+            border_style="blue",
+            padding=(0, 1)
+        )
+        self.console.print(panel)
+    
+    def display_warning(self, message: str):
+        """Display warning message"""
+        self.console.print(f"[yellow]{message}[/yellow]")
+    
+    def display_goodbye(self):
+        """Display goodbye message"""
+        self.console.print("\n[green]Thank you for using the UTI Care Agent. Take care![/green]")
+    
+    def get_user_input(self) -> str:
+        """Get user input with simple prompt"""
+        try:
+            user_input = self.console.input("\n[blue]You:[/blue] ").strip()
+            return user_input
+        except (EOFError, KeyboardInterrupt):
+            return "quit"

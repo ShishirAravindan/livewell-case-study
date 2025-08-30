@@ -17,46 +17,29 @@ class PatientInterface:
         signal.signal(signal.SIGINT, self._signal_handler)
     
     def _signal_handler(self, signum, frame):
-        print("\n\nThank you for using the UTI Care Agent. Goodbye!")
+        self.conversation_manager.display_goodbye()
         self.running = False
         sys.exit(0)
     
-    def display_welcome(self):
-        print("=" * 50)
-        print("UTI Care Agent")
-        print("=" * 50)
-        print("I'm here to help assess your urinary symptoms and provide guidance.")
-        print("Type 'quit' or 'exit' to end the session at any time.")
-        print("Press Ctrl+C to exit gracefully.\n")
-    
-    def handle_user_input(self) -> str:
-        try:
-            return input("You: ").strip()
-        except EOFError:
-            return "quit"
-    
-    def display_response(self, response: str):
-        print(f"\nAgent: {response}\n")
-    
     def manage_conversation_flow(self):
-        self.display_welcome()
+        self.conversation_manager.display_welcome()
         
         while self.running:
-            user_input = self.handle_user_input()
+            user_input = self.conversation_manager.get_user_input()
             
             if user_input.lower() in ['quit', 'exit', 'bye']:
-                print("Thank you for using the UTI Care Agent. Take care!")
+                self.conversation_manager.display_goodbye()
                 break
             
             if not user_input:
                 continue
                 
             response = self.conversation_manager.process_input(user_input)
-            self.display_response(response)
+            self.conversation_manager.display_agent_response(response)
             
             # Check if conversation is complete
             if self.conversation_manager.is_complete():
-                print("Session complete. Thank you for using the UTI Care Agent!")
+                self.conversation_manager.display_goodbye()
                 break
 
 
