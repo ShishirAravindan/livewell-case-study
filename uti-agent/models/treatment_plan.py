@@ -5,8 +5,9 @@ from enum import Enum
 
 class TreatmentType(Enum):
     NITROFURANTOIN = "nitrofurantoin"
-    TRIMETHOPRIM = "trimethoprim"
-    FOSFOMYCIN = "fosfomycin"
+    TRIMETHOPRIM_SULFAMETHOXAZOLE = "tmp_smx"
+    FOSFOMYCIN_3G = "fosfomycin_3g"
+    FOSFOMYCIN_200MG = "fosfomycin_200mg"
     REFERRAL = "referral"
 
 

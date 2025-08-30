@@ -12,6 +12,13 @@ class SymptomData:
     hematuria: bool = False
     onset: str = ""
     severity: Optional[str] = None
+    # Systemic symptoms that indicate complications
+    fever: bool = False
+    rigors: bool = False
+    flank_pain: bool = False
+    back_pain: bool = False
+    nausea: bool = False
+    vomiting: bool = False
 
 
 @dataclass
@@ -27,6 +34,7 @@ class UTIHistory:
     date: datetime
     treatment: str
     resolved: bool
+    treatment_completion_date: Optional[datetime] = None
 
 
 @dataclass
@@ -36,6 +44,12 @@ class HistoryData:
     recent_antibiotics: bool = False
     previous_utis: List[UTIHistory] = field(default_factory=list)
     immunocompromised: bool = False
+    # Urinary tract complications
+    abnormal_urinary_function: bool = False
+    indwelling_catheter: bool = False
+    neurogenic_bladder: bool = False
+    renal_stones: bool = False
+    renal_dysfunction: bool = False
 
 
 @dataclass
